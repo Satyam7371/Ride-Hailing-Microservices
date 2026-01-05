@@ -1,75 +1,94 @@
 # 🚕 Ride Hailing Microservices Platform
 
-A production-style backend system for a ride-hailing application built using Spring Boot microservices.  
+A production-style backend system for a ride-hailing application built using Spring Boot microservices.
 The project focuses on scalability, modular design, and real-time communication.
 
 ---
 
-## ✨ Key Features
+## 📌 Highlights
 
-- Microservices-based architecture
-- Mono-repo structure for centralized management
-- Real-time communication support
-- Decoupled authentication service
-- Service discovery using Eureka
-- Clean layered architecture
-
----
-
-## 🧩 Microservices
-
-- **auth-service**  
-  Handles authentication and JWT token management (kept decoupled).
-
-- **booking-service**  
-  Manages ride booking lifecycle and ride status.
-
-- **location-service**  
-  Tracks real-time driver locations using Redis and geo-queries.
-
-- **entity-service**  
-  Contains shared domain models used across services.
-
-- **review-service**  
-  Manages ride ratings and user reviews.
-
-- **socket-service**  
-  Provides real-time updates using WebSocket and STOMP.
-
-- **service-discovery**  
-  Eureka-based service registry for service discovery.
+- 🚀 Microservices-based architecture (Spring Boot)
+- 🧩 Clean domain-driven service separation
+- 🔐 Decoupled authentication using JWT
+- 📍 Real-time driver location tracking with Redis Geo
+- 🔁 Asynchronous communication using Kafka
+- ⚡ Live updates via WebSocket (STOMP)
+- 🧭 Service discovery using Eureka
+- 🗃 Database migration with Flyway
+- 📦 Mono-repo for centralized management
 
 ---
 
-## 🏗 Architecture
+## 🏗 System Architecture
 
-- Microservices-based backend system
-- Mono-repo for better orchestration and version control
-- Controller → Service → Repository pattern
-- Asynchronous and real-time communication support
-- Database migration using Flyway
-- Service discovery ready
+> *(Add architecture diagram image here if available)*
+
+Client (Mobile / Web)
+|
+API Requests
+|
+┌──────────────┐
+│ Auth Service │ ← JWT Authentication
+└──────────────┘
+|
+┌────────────────────────────────────────┐
+│ Booking | Location | Review | Socket │
+│ Entity | Kafka | Redis | Services │
+└────────────────────────────────────────┘
+|
+┌──────────────────────────┐
+│ Eureka Service Discovery │
+└──────────────────────────┘
+
+
+---
+
+## 🧩 Microservices Breakdown
+
+| Service | Responsibility |
+|------|------|
+| **auth-service** | User authentication, JWT token generation & validation |
+| **booking-service** | Ride creation, ride lifecycle & status management |
+| **location-service** | Real-time driver location tracking using Redis Geo |
+| **entity-service** | Shared domain models to avoid duplication |
+| **review-service** | Ride ratings and user reviews |
+| **socket-service** | Real-time communication using WebSocket & STOMP |
+| **service-discovery** | Eureka-based service registry |
+
+---
+
+## 🔄 Communication Patterns
+
+- **Synchronous:** REST APIs (Service-to-Service)
+- **Asynchronous:** Kafka event streaming
+- **Real-time:** WebSocket (STOMP)
+- **Discovery:** Eureka Service Registry
 
 ---
 
 ## ⚙️ Tech Stack
 
+### Backend
 - Java
 - Spring Boot
 - Spring Data JPA
 - Spring Security (JWT)
+
+### Infrastructure & Messaging
 - MySQL
-- Redis
+- Redis (Geo Queries)
 - Kafka
 - WebSocket (STOMP)
 - Eureka Service Discovery
+
+### Build & Migration
 - Gradle / Maven
+- Flyway
 
 ---
 
 ## 📂 Project Structure
 
-```
 Ride-Hailing-Microservices/
 ├── auth-service
 ├── booking-service
@@ -80,18 +99,64 @@ Ride-Hailing-Microservices/
 ├── service-discovery
 ├── README.md
 └── .gitignore
-```
+
 
 ---
 
-## 🚀 How to Run
+## 🚀 How to Run the Project
 
-1. Start `service-discovery`
-2. Start required microservices
-3. Test APIs using Postman or any API client
+### Prerequisites
+- Java 17+
+- MySQL
+- Redis
+- Kafka & Zookeeper
 
----
+### Steps
 
-## 👨‍💻 Author
+1. Start **service-discovery**
+```bash
+cd service-discovery
+./mvnw spring-boot:run
+Start infrastructure services
+(MySQL, Redis, Kafka)
 
-**Satyam Choubey**
+Start required microservices
+
+
+cd auth-service
+./mvnw spring-boot:run
+Test APIs using Postman or any API client
+
+🔑 Sample API Endpoints
+Authentication
+POST /auth/register
+POST /auth/login
+
+Ride Booking
+POST /booking/create
+GET  /booking/{rideId}
+
+Location
+GET /location/nearby-drivers
+🔮 Future Enhancements
+API Gateway (Spring Cloud Gateway)
+
+Rate limiting & request validation
+
+Docker & Kubernetes deployment
+
+CI/CD pipeline (GitHub Actions)
+
+🧠 Key Learnings
+Designing scalable microservices
+
+Real-time system architecture
+
+Event-driven communication
+
+Geo-spatial data handling
+
+Secure authentication strategies
+
+👨‍💻 Author
+Satyam Choubey
